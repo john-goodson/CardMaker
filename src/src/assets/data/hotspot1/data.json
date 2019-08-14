@@ -1,0 +1,27 @@
+{
+    "sourceFileName": "assets/planets.gif",
+    "sourceFileType" : "image",
+    "hotspots": [
+        {
+            "hotspotId": "1",
+            "hotspotShape" : "circle",
+            "xCord": 90,
+            "yCord": 58,
+            "diameter": 3,
+            "markup": {},
+            "template": "template.html",
+            "left": 90,
+            "top": 58
+        },
+        {
+            "hotspotId": "2",
+            "hotspotShape" : "circle",
+            "xCord": 125,
+            "yCord": 58,
+            "diameter": 8,
+            "markup": {},
+            "left": 125,
+            "top": 58
+        }
+    ]
+}

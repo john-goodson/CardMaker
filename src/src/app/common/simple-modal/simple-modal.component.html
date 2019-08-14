@@ -1,0 +1,19 @@
+<div id="{{elementId}}" #modalcontainer class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+        <h4 class="modal-title">{{title}}</h4>
+      </div>
+      <div class="modal-body">
+        <ng-content></ng-content>
+
+      </div>
+      <div class = "modal-footer">
+      <button type="button" (click) = "submit()" [disabled]="!enablePrimary" class="btn btn-primary">{{primaryBtnText}} </button>
+      <button *ngIf="showsecondaryButton" type="button" (click) = "secondarySubmit()" class="btn btn-primary">{{secondaryButtonText}} </button>
+      <button type="button" class="btn btn-cancel" (click)="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

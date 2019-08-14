@@ -1,0 +1,22 @@
+<div *ngIf="imageDetails" >
+
+  <img src="{{imageDetails.imageName}}" alt="Planets" usemap="#planetmap" style="position:relative">
+  <map name="planetmap">
+      <div *ngFor="let img of imageDetails.hotspots"  [ngStyle]="{'position':'absolute','top':img.top + 'px','left':img.left + 'px'}">
+    <area  shape="circle" coords="{{img.xCord}},{{img.yCord}},{{img.diameter}}" alt="Mercury"
+      data-toggle="popover" data-html="true" attr.data-content='{{img.markup.title}}'
+      attr.data-content='{{img.markup.body}}' [attr.data-left]="img.left" [attr.data-top]="img.top">
+      </div>
+  </map>
+</div>
+<div #popoverToolbarCreate style="display:none">
+  <ul>
+    <li>No Description exists</li>
+    <li>
+      <a href="./#edit" class="editLink">Create Description</a>
+    </li>
+  </ul>
+</div>
+<div #popoverToolbarEdit style="display:none">
+  <a href="./#edit" class="editLink">Edit</a>
+</div>

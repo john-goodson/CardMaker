@@ -1,0 +1,37 @@
+{
+    "imageName": "assets/data/ci_cd/cicd.png",
+    "hotspots": [
+        {
+            "hotspotId": "1",
+            "xCord": 100,
+            "yCord": 100,
+            "diameter": 50,
+            "markup": {},
+            "template": "template.html",
+            "left": 95,
+            "top": 65,
+            "filename": ""
+        },
+        {
+            "hotspotId": "2",
+            "xCord": 200,
+            "yCord": 200,
+            "diameter": 50,
+            "markup": {},
+            "filename": "hotspot1.html",
+            "left": 124,
+            "top": 65
+        },
+        {
+            "hotspotId": "3",
+            "xCord": 300,
+            "yCord": 300,
+            "diameter": 100,
+            "markup": {},
+            "template": "template.html",
+            "left": 0,
+            "top": 0,
+            "filename": ""
+        }
+    ]
+}

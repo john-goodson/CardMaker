@@ -1,0 +1,2 @@
+.modal-body { height: auto; overflow-y: scroll;width:auto; }
+.modal-dialog { position: absolute; margin-left: 200px; height: 400px; width: auto;}
