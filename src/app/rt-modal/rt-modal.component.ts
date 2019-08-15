@@ -27,7 +27,7 @@ export class RtModalComponent implements OnInit,AfterViewChecked {
 
 
   private EnableSave() {
-    if (this.RTEditor.filename) {
+    if (this.RTEditor.title) {
       this.modalRTEditor.enablePrimary = true;
     }
     else {

@@ -26,8 +26,8 @@ export class ImageMapComponent implements OnInit, AfterViewInit, AfterViewChecke
     , private renderer: Renderer) { }
   imageDetails: ImageDetails;
   hotspotname: string;
-  clickTop : any;
-  clickLeft : any;
+  clickTop: any;
+  clickLeft: any;
 
   ngOnInit() {
 
@@ -42,7 +42,7 @@ export class ImageMapComponent implements OnInit, AfterViewInit, AfterViewChecke
       else {
         this.hotspotname = params.hotspotname;
       }
-      
+
       this.http.get(`assets/data/${this.hotspotname}/data.jso`).pipe(map((t: ImageDetails) => {
         this.imageDetails = t;
 
@@ -50,25 +50,24 @@ export class ImageMapComponent implements OnInit, AfterViewInit, AfterViewChecke
           let hotspot = this.imageDetails.hotspots[i];
           if (hotspot.filename) {
             this.hotspotservice.getRequestDigestToken().subscribe(digest => {
-              this.hotspotservice.getFileFromFolder(digest["d"].GetContextWebInformation.FormDigestValue,this.hotspotname, hotspot.filename).subscribe(value => {
+              this.hotspotservice.getFileFromFolder(digest["d"].GetContextWebInformation.FormDigestValue, this.hotspotname, hotspot.filename).subscribe(value => {
                 hotspot.markup.body = value.toString();
                 $(this.popoverToolbarEdit.nativeElement).find(".editLink").attr("href", `#edit/${this.hotspotname}/${hotspot.hotspotId}/${hotspot.filename}`);
                 console.log(this.popoverToolbarEdit.nativeElement.innerHTML)
+                hotspot.markup.title = hotspot.filename.split("_")[0];
                 hotspot.markup.body = hotspot.markup.body + this.popoverToolbarEdit.nativeElement.innerHTML;
               })
             })
 
           }
           else {
-            
-            if(hotspot.template)
-            {
+
+            if (hotspot.template) {
               $(this.popoverToolbarCreate.nativeElement).find(".editLink").attr("href", `./#edit/template/${this.hotspotname}/${hotspot.hotspotId}/${hotspot.template}`)
             }
-            else
-            {
+            else {
               $(this.popoverToolbarCreate.nativeElement).find(".editLink").attr("href", `./#edit/${this.hotspotname}/${hotspot.hotspotId}`)
-              
+
             }
             hotspot.markup = { body: this.popoverToolbarCreate.nativeElement.innerHTML, title: '', footer: '' };
           }
@@ -79,28 +78,15 @@ export class ImageMapComponent implements OnInit, AfterViewInit, AfterViewChecke
 
   }
   ngAfterViewChecked() {
-   
-      // if($(e.target).attr('data-toggle') == 'popover')
-      // $('.popover').css({top:this.clickTop-119,left:this.clickLeft-68}).fadeIn();
-      // });
-  
+
+    // if($(e.target).attr('data-toggle') == 'popover')
+    // $('.popover').css({top:this.clickTop-119,left:this.clickLeft-68}).fadeIn();
+    // });
+    console.log($('[data-toggle="popover"]').attr('title'))
     $('[data-toggle="popover"]').popover({
-      html : true,
+      html: true,
       placement: 'bottom',
-      sanitize: false,
-      sanitizeFn: content => content
-})
-
-
-
-    //hack to close bootstrap popover when clcked outsde of it
-    // $('body').on('click', function (e) {
-    //   //did not click a popover toggle, or icon in popover toggle, or popover
-    //   if ($(e.target).data('toggle') !== 'popover' && $(e.target).parents('[data-toggle="popover"]').length === 0
-    //       && $(e.target).parents('.popover.in').length === 0) {
-    //       (($('[data-toggle="popover"]').popover('hide').data('bs.popover') || {}).inState || {}).click = false;
-    //   }
-    //   });
+    })
 
   }
   ngOnDestroy() {
@@ -108,5 +94,5 @@ export class ImageMapComponent implements OnInit, AfterViewInit, AfterViewChecke
     $('[data-toggle="popover"]').popover('hide');
     $('[data-toggle="popover"]').popover('dispose');
   }
-  
+
 }

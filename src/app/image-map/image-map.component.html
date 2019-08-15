@@ -4,8 +4,8 @@
   <map name="planetmap">
       <div *ngFor="let img of imageDetails.hotspots"  [ngStyle]="{'position':'absolute','top':img.top + 'px','left':img.left + 'px'}">
     <area  shape="circle" coords="{{img.xCord}},{{img.yCord}},{{img.diameter}}" alt="Mercury"
-      data-toggle="popover" data-html="true" attr.data-content='{{img.markup.title}}'
-      attr.data-content='{{img.markup.body}}' [attr.data-left]="img.left" [attr.data-top]="img.top">
+      data-toggle="popover" data-html="true" [attr.data-original-title]='img.markup.title'
+      [attr.data-content]='img.markup.body' [attr.data-left]="img.left" [attr.data-top]="img.top">
       </div>
   </map>
 </div>
