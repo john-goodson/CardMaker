@@ -1,34 +1,38 @@
 {
     "sourceFilename": "assets/data/ci_cd/cicd.jpg",
-    "sourceType" : "image",
+    "sourceType": "image",
     "hotspots": [
         {
             "hotspotId": "1",
             "coords": "100,100,50",
-            "shape" : "circle",
+            "shape": "circle",
             "markup": {},
             "template": "template.html",
+            "placement" : "left",
             "targetFilename": "hotspot 1.html"
         },
         {
             "hotspotId": "2",
             "coords": "315,115,50",
-            "shape" : "circle",
+            "shape": "circle",
             "markup": {},
+            "placement" : "left",
             "targetFilename": "hotspot1.html"
         },
         {
             "hotspotId": "3",
-            "coords":"150,185,30",
-            "shape" : "circle",
+            "coords": "150,185,30",
+            "shape": "circle",
             "markup": {},
             "template": "template.html",
-            "targetFilename": "Execute Tests_8af84381-c421-4a06-b589-9c1df6ee08a5.html"
+            "placement" : "left",
+            "targetFilename": "Execute Test_7da50838-eed2-4216-81ac-77bd6d12a278.html"
         },
         {
             "hotspotId": "4",
             "coords": "270,171,30",
-            "shape" : "circle",
+            "shape": "circle",
+            "placement" : "left",
             "markup": {},
             "template": "template.html",
             "targetFilename": ""

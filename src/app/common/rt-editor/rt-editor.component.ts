@@ -23,6 +23,7 @@ export class RtEditorComponent implements OnInit {
   filename:string = "";
   createMode: boolean = false;
   filenameUnchanged: string;
+  titleUnChanged : string;
   templatefile: string
   @Output() filenameChange = new EventEmitter();
   constructor(private http: HttpClient,
@@ -45,6 +46,7 @@ export class RtEditorComponent implements OnInit {
       this.hotspotid = params.hotspotid;
       if (this.filename) {
         this.title = this.filename.split('_')[0];
+        this.titleUnChanged =  this.title;
         this.filenameGuid = this.filename.split('_')[1];
         this.filenameUnchanged = this.filename
         this.getFile(this.filename && (this.filename + ".html"))
@@ -60,7 +62,13 @@ export class RtEditorComponent implements OnInit {
 
   Save() 
   {
-     if(!this.filenameGuid)
+    //if title changed during update mode , we need to update the filename like in create mode
+    let titleChanged :Boolean = false;
+    if(this.titleUnChanged && this.titleUnChanged.toLowerCase() != this.title.toLowerCase())
+    {
+      titleChanged = true;
+    }
+     if(!this.filenameGuid || titleChanged)
      this.filenameGuid = this.newGuid();
      this.filename = this.title +  "_"  + this.filenameGuid
       this.hotspotservice.getRequestDigestToken().subscribe(digest => {
@@ -69,7 +77,7 @@ export class RtEditorComponent implements OnInit {
           this.hotspotname, this.filename && (this.filename + ".html"), this.editorValue).subscribe(x => {
             debugger;
             //If it is create mode then update back the new filename in the folder {hotspot}/data.json
-            if (this.createMode) {
+            if (this.createMode || titleChanged) {
               this.UpdateDataJsonFileWthFileName(this.filename);
             }
             else {

@@ -85,7 +85,6 @@ export class ImageMapComponent implements OnInit, AfterViewInit, AfterViewChecke
     console.log($('[data-toggle="popover"]').attr('title'))
     $('[data-toggle="popover"]').popover({
       html: true,
-      placement: 'bottom',
     })
 
   }

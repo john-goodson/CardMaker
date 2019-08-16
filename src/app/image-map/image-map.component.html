@@ -6,7 +6,8 @@
       [ngStyle]="{'position':'absolute','top':img.coords.split(',')[1] + 'px','left':img.coords.split(',')[0] + 'px'}">
     <area  shape="{{img.shape}}" coords="{{img.coords}}" alt="Mercury"
       data-toggle="popover" data-html="true" [attr.data-original-title]='img.markup.title'
-      [attr.data-content]='img.markup.body' [attr.data-left]="img.left" [attr.data-top]="img.top">
+      [attr.data-content]='img.markup.body' 
+      [attr.data-placement]='img.placement || "bottom"'>
       </div>
   </map>
 </div>
