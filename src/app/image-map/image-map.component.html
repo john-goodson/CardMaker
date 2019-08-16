@@ -1,9 +1,10 @@
 <div *ngIf="imageDetails" >
 
-  <img src="{{imageDetails.imageName}}" alt="Planets" usemap="#planetmap" style="position:relative">
+  <img src="{{imageDetails.sourceFilename}}" alt="Planets" usemap="#planetmap" style="position:relative">
   <map name="planetmap">
-      <div *ngFor="let img of imageDetails.hotspots"  [ngStyle]="{'position':'absolute','top':img.top + 'px','left':img.left + 'px'}">
-    <area  shape="circle" coords="{{img.xCord}},{{img.yCord}},{{img.diameter}}" alt="Mercury"
+      <div *ngFor="let img of imageDetails.hotspots"  
+      [ngStyle]="{'position':'absolute','top':img.coords.split(',')[1] + 'px','left':img.coords.split(',')[0] + 'px'}">
+    <area  shape="{{img.shape}}" coords="{{img.coords}}" alt="Mercury"
       data-toggle="popover" data-html="true" [attr.data-original-title]='img.markup.title'
       [attr.data-content]='img.markup.body' [attr.data-left]="img.left" [attr.data-top]="img.top">
       </div>
@@ -20,3 +21,4 @@
 <div #popoverToolbarEdit style="display:none">
   <a href="./#edit" class="editLink">Edit</a>
 </div>
+

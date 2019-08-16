@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewChecked, AfterViewInit, AfterContentChecked, ViewChild, ElementRef, ContentChild, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
-import { ImageDetails, Hotspot, Markup } from '../entities';
+import { ContentDetails, Hotspot, Markup } from '../entities';
 import { ActivatedRoute } from '@angular/router'
 
 import { Observable } from 'rxjs';
@@ -24,7 +24,7 @@ export class ImageMapComponent implements OnInit, AfterViewInit, AfterViewChecke
     private route: ActivatedRoute
     , private elementRef: ElementRef
     , private renderer: Renderer) { }
-  imageDetails: ImageDetails;
+  imageDetails: ContentDetails;
   hotspotname: string;
   clickTop: any;
   clickLeft: any;
@@ -37,24 +37,24 @@ export class ImageMapComponent implements OnInit, AfterViewInit, AfterViewChecke
     this.route.params.subscribe(params => {
       if (!params.hotspotname) {
         //TODO: remove this code later
-        this.hotspotname = "hotspot1";
+        this.hotspotname = "ci_cd";
       }
       else {
         this.hotspotname = params.hotspotname;
       }
 
-      this.http.get(`assets/data/${this.hotspotname}/data.jso`).pipe(map((t: ImageDetails) => {
+      this.http.get(`assets/data/${this.hotspotname}/data.jso`).pipe(map((t: ContentDetails) => {
         this.imageDetails = t;
 
         for (var i = 0; i < this.imageDetails.hotspots.length; i++) {
           let hotspot = this.imageDetails.hotspots[i];
-          if (hotspot.filename) {
+          if (hotspot.targetFilename) {
             this.hotspotservice.getRequestDigestToken().subscribe(digest => {
-              this.hotspotservice.getFileFromFolder(digest["d"].GetContextWebInformation.FormDigestValue, this.hotspotname, hotspot.filename).subscribe(value => {
+              this.hotspotservice.getFileFromFolder(digest["d"].GetContextWebInformation.FormDigestValue, this.hotspotname, hotspot.targetFilename).subscribe(value => {
                 hotspot.markup.body = value.toString();
-                $(this.popoverToolbarEdit.nativeElement).find(".editLink").attr("href", `#edit/${this.hotspotname}/${hotspot.hotspotId}/${hotspot.filename}`);
+                $(this.popoverToolbarEdit.nativeElement).find(".editLink").attr("href", `#edit/${this.hotspotname}/${hotspot.hotspotId}/${hotspot.targetFilename}`);
                 console.log(this.popoverToolbarEdit.nativeElement.innerHTML)
-                hotspot.markup.title = hotspot.filename.split("_")[0];
+                hotspot.markup.title = hotspot.targetFilename.split("_")[0];
                 hotspot.markup.body = hotspot.markup.body + this.popoverToolbarEdit.nativeElement.innerHTML;
               })
             })

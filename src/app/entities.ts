@@ -1,33 +1,31 @@
-export interface ImageDetails
+export interface ContentDetails {
+    sourceType : SourceType
+    sourceFilename: string;
+    hotspots: Hotspot[];
+}
+export enum SourceType
 {
-imageName :string;
-hotspots : Hotspot[];
+    image,
+    article
+}
+export interface Hotspot {
+    hotspotId: string;
+    shape: string;
+    coords: string;
+    markup: Markup;
+    targetFilename: string;
+    template?: string;
 }
 
-export interface Hotspot
-{
-    hotspotId:string;
-    xCord:Number;
-    yCord:Number;
-    diameter?:Number;
-    markup : Markup;
-    filename:string;
-    template?:string;
-    left:Number;
-    top:Number;
+export interface Markup {
+    title: string;
+    titleImage?: string;
+    footer: string;
+    body: string;
 }
 
-export interface Markup
-{
-    title : string;
-    titleImage? : string;
-    footer:string;
-    body:string;
-}
-
-export class Config
-{
-    url : string;
-    site : string;
-    folder : string;
+export class Config {
+    url: string;
+    site: string;
+    folder: string;
 }

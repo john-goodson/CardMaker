@@ -1,27 +1,37 @@
 {
-    "sourceFileName": "assets/planets.gif",
-    "sourceFileType" : "image",
+    "sourceFilename": "assets/data/ci_cd/cicd.jpg",
+    "sourceType" : "image",
     "hotspots": [
         {
             "hotspotId": "1",
-            "hotspotShape" : "circle",
-            "xCord": 90,
-            "yCord": 58,
-            "diameter": 3,
+            "coords": "100,100,50",
+            "shape" : "circle",
             "markup": {},
             "template": "template.html",
-            "left": 90,
-            "top": 58
+            "targetFilename": "hotspot 1.html"
         },
         {
             "hotspotId": "2",
-            "hotspotShape" : "circle",
-            "xCord": 125,
-            "yCord": 58,
-            "diameter": 8,
+            "coords": "315,115,50",
+            "shape" : "circle",
             "markup": {},
-            "left": 125,
-            "top": 58
+            "targetFilename": "hotspot1.html"
+        },
+        {
+            "hotspotId": "3",
+            "coords":"150,185,30",
+            "shape" : "circle",
+            "markup": {},
+            "template": "template.html",
+            "targetFilename": "Execute Tests_8af84381-c421-4a06-b589-9c1df6ee08a5.html"
+        },
+        {
+            "hotspotId": "4",
+            "coords": "270,171,30",
+            "shape" : "circle",
+            "markup": {},
+            "template": "template.html",
+            "targetFilename": ""
         }
     ]
 }

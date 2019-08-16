@@ -5,7 +5,7 @@ import { CKEditor4 } from 'ckeditor4-angular/ckeditor';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HotspotDataService } from '../../services/hotspot-data.service';
 import { map } from 'rxjs/operators';
-import { ImageDetails, Hotspot } from '../../entities';
+import { ContentDetails, Hotspot } from '../../entities';
 declare var CKEDITOR: any;
 @Component({
   selector: 'rt-editor',
@@ -87,9 +87,9 @@ export class RtEditorComponent implements OnInit {
   } 
 
   private UpdateDataJsonFileWthFileName(filename) {
-    this.http.get(`assets/data/${this.hotspotname}/data.jso`).pipe(map((imageDetails: ImageDetails) => {
+    this.http.get(`assets/data/${this.hotspotname}/data.jso`).pipe(map((imageDetails: ContentDetails) => {
       let hotspot: Hotspot = imageDetails.hotspots.find(h => h.hotspotId == this.hotspotid);
-      hotspot.filename = filename && (filename + ".html");
+      hotspot.targetFilename = filename && (filename + ".html");
       this.hotspotservice.getRequestDigestToken().subscribe(digest => {
         this.hotspotservice.addJSONFileToFolder(digest["d"].GetContextWebInformation.FormDigestValue, this.hotspotname, "data.jso", JSON.stringify(imageDetails)).subscribe(() => {
           this.router.navigate([`/home/${this.hotspotname}`]);
