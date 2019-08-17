@@ -16,6 +16,9 @@ export interface Hotspot {
     targetFilename: string;
     template?: string;
     placement? : string;
+    offset? : Number;
+    left?:Number;
+    top? : Number;
 }
 
 export interface Markup {
