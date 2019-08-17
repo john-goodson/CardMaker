@@ -63,10 +63,10 @@ export class ImageMapComponent implements OnInit, AfterViewInit, AfterViewChecke
           else {
 
             if (hotspot.template) {
-              $(this.popoverToolbarCreate.nativeElement).find(".editLink").attr("href", `./#edit/template/${this.hotspotname}/${hotspot.hotspotId}/${hotspot.template}`)
+              $(this.popoverToolbarCreate.nativeElement).find(".editLink").attr("href", `#edit/template/${this.hotspotname}/${hotspot.hotspotId}/${hotspot.template}`)
             }
             else {
-              $(this.popoverToolbarCreate.nativeElement).find(".editLink").attr("href", `./#edit/${this.hotspotname}/${hotspot.hotspotId}`)
+              $(this.popoverToolbarCreate.nativeElement).find(".editLink").attr("href", `#edit/${this.hotspotname}/${hotspot.hotspotId}`)
 
             }
             hotspot.markup = { body: this.popoverToolbarCreate.nativeElement.innerHTML, title: '', footer: '' };
