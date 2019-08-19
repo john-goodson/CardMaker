@@ -15,6 +15,7 @@ import { RtModalComponent } from './rt-modal/rt-modal.component';
 import { FormsModule }   from '@angular/forms';
 import { RemoveExtensionPipe } from './common/remove-extension.pipe';
 import { ConfigService } from './services/config.service';
+import { ClosePopoverGuardService } from './services/close-popover-guard.service';
 
 //let jQuery : Object;// Add this function
 export function initConfig(configSvc: ConfigService) {
@@ -39,11 +40,11 @@ export function initConfig(configSvc: ConfigService) {
     HttpClientModule,
     CKEditorModule,
     RouterModule.forRoot([
-      { path:"home/:hotspotname",component:ImageMapComponent},
-      { path:"home",component:ImageMapComponent},
-      {path:"edit/template/:hotspotname/:hotspotid/:templatefile",component:RtModalComponent},
-      {path:"edit/:hotspotname/:hotspotid/:filename",component:RtModalComponent},
-      {path:"edit/:hotspotname/:hotspotid",component:RtModalComponent},
+      { path:"home/:hotspotname",component:ImageMapComponent,canActivate:[ClosePopoverGuardService]},
+      { path:"home",component:ImageMapComponent,canActivate:[ClosePopoverGuardService]},
+      {path:"edit/template/:hotspotname/:hotspotid/:templatefile",component:RtModalComponent,canActivate:[ClosePopoverGuardService]},
+      {path:"edit/:hotspotname/:hotspotid/:filename",component:RtModalComponent,canActivate:[ClosePopoverGuardService]},
+      {path:"edit/:hotspotname/:hotspotid",component:RtModalComponent,canActivate:[ClosePopoverGuardService]},
       {path:"",pathMatch:'full',redirectTo:'home'}
     ],{enableTracing:true,useHash:true})
   ],

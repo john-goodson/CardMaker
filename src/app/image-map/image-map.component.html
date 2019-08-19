@@ -3,7 +3,7 @@
   <img src="{{imageDetails.sourceFilename}}" alt="Planets" usemap="#planetmap" style="position:relative">
   <map name="planetmap">
       <div *ngFor="let img of imageDetails.hotspots"  
-      [ngStyle]="{'position':'absolute','top':img.top || img.coords.split(',')[1] + 'px','left':img.left || img.coords.split(',')[0] + 'px'}">
+      [ngStyle]="{'position':'absolute','top':(img.top && img.top + 'px') || (img.coords.split(',')[1] + 'px'),'left':( img.left && img.left + ' px') || (img.coords.split(',')[0] + 'px')}">
     <area  shape="{{img.shape}}" coords="{{img.coords}}" alt="Mercury" [ngStyle]="{'padding': img.offset + 'px' || '0px'}"
       data-toggle="popover" data-html="true" [attr.data-original-title]='img.markup.title'
       [attr.data-content]='img.markup.body' 
