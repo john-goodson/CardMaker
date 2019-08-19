@@ -17,11 +17,15 @@ export class SimpleModalComponent {
   @Input() secondaryButtonText: string;
   @Input() showsecondaryButton: Boolean = false;
   @Input() enablePrimary: Boolean = false;
+  @Input() enableSecondary: Boolean = true;
   @ViewChild('modalcontainer') containerEl: ElementRef;
   modalId: string;
 
   private modalSubmittedSource = new Subject<string>();
   modalSubmitted$ = this.modalSubmittedSource.asObservable();
+
+  private modalClosedSource = new Subject<string>();
+  modalClosedSource$ = this.modalClosedSource.asObservable();
 
   private modalSecondarySource = new Subject<string>();
   modalSecondary$ = this.modalSecondarySource.asObservable();
@@ -32,6 +36,7 @@ export class SimpleModalComponent {
     if (this.closeOnBodyClick.toLocaleLowerCase() === "true") {
       $(this.containerEl.nativeElement).modal('hide');
     }
+    this.modalClosedSource.next();
   }
 
   showModal(data) {
