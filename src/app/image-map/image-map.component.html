@@ -5,7 +5,7 @@
       <div *ngFor="let img of imageDetails.hotspots"  
       [ngStyle]="{'position':'absolute','top':(img.top && img.top + 'px') || (img.coords.split(',')[1] + 'px'),'left':( img.left && img.left + ' px') || (img.coords.split(',')[0] + 'px')}">
     <area  shape="{{img.shape}}" coords="{{img.coords}}" alt="Mercury" [ngStyle]="{'padding': img.offset + 'px' || '0px'}"
-      data-toggle="popover" data-html="true" [attr.data-original-title]='img.markup.title'
+      data-toggle="popover" data-html="true" [attr.data-original-title]='img.markup.title '
       [attr.data-content]='img.markup.body' 
       [attr.data-placement]='img.placement || "bottom"'>
       </div>
@@ -16,10 +16,12 @@
     <li>No Description exists</li>
     <li>
       <a href="./#edit" class="editLink">Create Description</a>
+      <a href="#" class="closePopover ml-2">Close</a>
     </li>
   </ul>
 </div>
 <div #popoverToolbarEdit style="display:none">
   <a href="./#edit" class="editLink">Edit</a>
+  <a href="#" class="closePopover ml-2">Close</a>
 </div>
 

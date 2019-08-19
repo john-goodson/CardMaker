@@ -28,7 +28,7 @@ export class ImageMapComponent implements OnInit, AfterViewInit, AfterViewChecke
   hotspotname: string;
   clickTop: any;
   clickLeft: any;
-
+ 
   ngOnInit() {
 
   }
@@ -85,8 +85,17 @@ export class ImageMapComponent implements OnInit, AfterViewInit, AfterViewChecke
     console.log($('[data-toggle="popover"]').attr('title'))
     $('[data-toggle="popover"]').popover({
       html: true,
-    })
+    });
 
+    //$(".closePopover").click(function() {$(this).closest(".popover").toggle();$(this).closest(".popover").remove();});
+   $('[data-toggle="popover"]').each(function () {
+    var button = $(this);
+    button.popover().on('shown.bs.popover', function() {
+        $($(button).popover().data('bs.popover').getTipElement()).find(".closePopover").on('click', function () {
+            button.popover('hide');
+        });
+    });
+});
   }
   ngOnDestroy() {
     $('.popover').hide();
