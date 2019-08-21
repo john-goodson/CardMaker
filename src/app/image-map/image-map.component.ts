@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewChecked, AfterViewInit, AfterContentChecked, ViewChild, ElementRef, ContentChild, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { ContentDetails, Hotspot, Markup } from '../entities';
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 
 import { Observable } from 'rxjs';
 import { SimpleModalComponent } from '../common/simple-modal/simple-modal.component';
@@ -9,6 +9,7 @@ import { RtEditorToolbarComponent } from '../rt-editor-toolbar/rt-editor-toolbar
 import { Renderer } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { HotspotDataService } from '../services/hotspot-data.service';
+import { ConfigService } from '../services/config.service';
 declare var $: any;
 @Component({
   selector: 'app-image-map',
@@ -21,7 +22,9 @@ export class ImageMapComponent implements OnInit, AfterViewInit, AfterViewChecke
   @ViewChild('popoverToolbarEdit') private popoverToolbarEdit: ElementRef;
   constructor(private http: HttpClient,
     private hotspotservice: HotspotDataService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
+    private configSvc: ConfigService
     , private elementRef: ElementRef
     , private renderer: Renderer) { }
   imageDetails: ContentDetails;
@@ -43,7 +46,7 @@ export class ImageMapComponent implements OnInit, AfterViewInit, AfterViewChecke
         this.hotspotname = params.hotspotname;
       }
 
-      this.http.get(`assets/data/${this.hotspotname}/data.jso`).pipe(map((t: ContentDetails) => {
+      this.http.get(`${this.configSvc.config.url}/${this.configSvc.config.site}/${this.configSvc.config.contentFolder}/${this.hotspotname}/data.jso`).pipe(map((t: ContentDetails) => {
         this.imageDetails = t;
 
         for (var i = 0; i < this.imageDetails.hotspots.length; i++) {
@@ -56,7 +59,11 @@ export class ImageMapComponent implements OnInit, AfterViewInit, AfterViewChecke
                 console.log(this.popoverToolbarEdit.nativeElement.innerHTML)
                 hotspot.markup.title = hotspot.targetFilename.split("_")[0];
                 hotspot.markup.body = hotspot.markup.body + this.popoverToolbarEdit.nativeElement.innerHTML;
+              },(error)=>{
+                this.router.navigate([`error/2/${hotspot.targetFilename}`]);
               })
+            },(error)=>{
+              this.router.navigate([`error/1/data.jso`]);
             })
 
           }

@@ -1,5 +1,9 @@
 {
     "url":"http://foo.wingtip.com",
     "site" : "dd",
-    "folder" : "Shared Documents/assets/data"
+    "contentFolder" : "Shared Documents/assets/data",
+    "errors" : [
+        {"errorCode" : 1,"errorMessage" : "The configuration data file {{filename}} is not found"},
+        {"errorCode" : 2,"errorMessage" : "The target File {{filename}} is invalid in the data configuration"}
+    ]
 }

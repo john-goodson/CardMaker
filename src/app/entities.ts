@@ -31,5 +31,11 @@ export interface Markup {
 export class Config {
     url: string;
     site: string;
-    folder: string;
+    contentFolder: string;
+    errors : Error[];
+}
+
+export class Error{
+    errorCode : string;
+    errorMessage : string;
 }

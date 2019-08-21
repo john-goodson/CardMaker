@@ -16,6 +16,7 @@ import { FormsModule }   from '@angular/forms';
 import { RemoveExtensionPipe } from './common/remove-extension.pipe';
 import { ConfigService } from './services/config.service';
 import { ClosePopoverGuardService } from './services/close-popover-guard.service';
+import { ErrorHandlerComponent } from './error-handler/error-handler.component';
 
 //let jQuery : Object;// Add this function
 export function initConfig(configSvc: ConfigService) {
@@ -32,6 +33,7 @@ export function initConfig(configSvc: ConfigService) {
     RtEditorToolbarComponent,
     RtModalComponent,
     RemoveExtensionPipe,
+    ErrorHandlerComponent,
     
   ],
   imports: [
@@ -45,6 +47,7 @@ export function initConfig(configSvc: ConfigService) {
       {path:"edit/template/:hotspotname/:hotspotid/:templatefile",component:RtModalComponent,canActivate:[ClosePopoverGuardService]},
       {path:"edit/:hotspotname/:hotspotid/:filename",component:RtModalComponent,canActivate:[ClosePopoverGuardService]},
       {path:"edit/:hotspotname/:hotspotid",component:RtModalComponent,canActivate:[ClosePopoverGuardService]},
+      { path:"error/:errorCode/:filename",component:ErrorHandlerComponent},
       {path:"",pathMatch:'full',redirectTo:'home'}
     ],{enableTracing:true,useHash:true})
   ],

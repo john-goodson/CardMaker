@@ -13,7 +13,7 @@ export class HotspotDataService {
   ,private _configSvc: ConfigService) { 
     this.url = _configSvc.config.url
     this.site = _configSvc.config.site
-    this.folder = _configSvc.config.folder
+    this.folder = _configSvc.config.contentFolder
   }
   // Add the file to the file collection in the specified folder.
   public addTextFileToFolder(digest,hotspotname:string,filename:string,content:string) {
