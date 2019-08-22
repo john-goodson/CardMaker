@@ -104,6 +104,7 @@ export class ImageMapComponent implements OnInit, AfterViewInit, AfterViewChecke
     button.popover().on('shown.bs.popover', function() {
         $($(button).popover().data('bs.popover').getTipElement()).find(".closePopover").on('click', function () {
             button.popover('hide');
+            return false;
         });
     });
 });
