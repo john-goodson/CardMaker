@@ -1,15 +1,23 @@
-import { Component, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewChecked, OnDestroy } from '@angular/core';
 import { SimpleModalComponent } from '../common/simple-modal/simple-modal.component';
 import { RtEditorComponent } from '../common/rt-editor/rt-editor.component';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'rt-modal',
   templateUrl: './rt-modal.component.html',
   styleUrls: ['./rt-modal.component.css']
 })
-export class RtModalComponent implements OnInit,AfterViewChecked {
+export class RtModalComponent implements OnInit,AfterViewChecked,OnDestroy {
+  ngOnDestroy(): void {
+    for(var i=0;i<this.subs.length;i++)
+    {
+      this.subs[i].unsubscribe()
+    }
+  }
   hotspotname:string;
+  subs:Subscription[] =[];
   ngAfterViewChecked(): void {
     this.EnableSave();
   }
@@ -26,9 +34,9 @@ export class RtModalComponent implements OnInit,AfterViewChecked {
         }
     });
     this.modalRTEditor.showModal({})
-    this.modalRTEditor.modalSubmitted$.subscribe(t => this.RTEditor.Save())
-    this.modalRTEditor.modalSecondary$.subscribe(t => this.RTEditor.Delete())
-    this.modalRTEditor.modalClosedSource$.subscribe(t => this._router.navigate([`./home/${this.hotspotname}`]))
+    this.subs.push(this.modalRTEditor.modalSubmitted$.subscribe(t => this.RTEditor.Save()))
+    this.subs.push(this.modalRTEditor.modalSecondary$.subscribe(t => this.RTEditor.Delete()))
+    this.subs.push(this.modalRTEditor.modalClosedSource$.subscribe(t => this._router.navigate([`./home/${this.hotspotname}`])))
     
   }
   UpdateValidationChanges() {

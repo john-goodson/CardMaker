@@ -12,7 +12,7 @@
       <div class = "modal-footer">
       <button type="button" (click) = "submit()" [disabled]="!enablePrimary" class="btn btn-primary">{{primaryBtnText}} </button>
       <button *ngIf="showsecondaryButton" [disabled]="!enableSecondary" type="button" (click) = "secondarySubmit()" class="btn btn-primary">{{secondaryButtonText}} </button>
-      <button type="button" class="btn btn-cancel" (click)="closeModal()">Cancel</button>
+      <button type="button" class="btn btn-cancel" (click)="cancelModal()">Cancel</button>
       </div>
     </div>
   </div>

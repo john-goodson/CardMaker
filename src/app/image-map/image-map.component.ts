@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { ContentDetails, Hotspot, Markup } from '../entities';
 import { ActivatedRoute, Router } from '@angular/router'
 
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { SimpleModalComponent } from '../common/simple-modal/simple-modal.component';
 import { RtEditorToolbarComponent } from '../rt-editor-toolbar/rt-editor-toolbar.component';
 import { Renderer } from '@angular/core';
@@ -31,13 +31,15 @@ export class ImageMapComponent implements OnInit, AfterViewInit, AfterViewChecke
   hotspotname: string;
   clickTop: any;
   clickLeft: any;
- 
+ //Subscriptions to clean up later
+ sub: Subscription[]=[];
+
   ngOnInit() {
 
   }
 
   ngAfterViewInit() {
-    this.route.params.subscribe(params => {
+    let routeSub = this.route.params.subscribe(params => {
       if (!params.hotspotname) {
         //TODO: remove this code later
         this.hotspotname = "ci_cd";
@@ -46,14 +48,14 @@ export class ImageMapComponent implements OnInit, AfterViewInit, AfterViewChecke
         this.hotspotname = params.hotspotname;
       }
 
-      this.http.get(`${this.configSvc.config.url}/${this.configSvc.config.site}/${this.configSvc.config.contentFolder}/${this.hotspotname}/data.jso`).pipe(map((t: ContentDetails) => {
+      let dataSub = this.http.get(`${this.configSvc.config.url}/${this.configSvc.config.site}/${this.configSvc.config.contentFolder}/${this.hotspotname}/data.jso`).pipe(map((t: ContentDetails) => {
         this.imageDetails = t;
 
         for (var i = 0; i < this.imageDetails.hotspots.length; i++) {
           let hotspot = this.imageDetails.hotspots[i];
           if (hotspot.targetFilename) {
-            this.hotspotservice.getRequestDigestToken().subscribe(digest => {
-              this.hotspotservice.getFileFromFolder(digest["d"].GetContextWebInformation.FormDigestValue, this.hotspotname, hotspot.targetFilename).subscribe(value => {
+            let digestSub = this.hotspotservice.getRequestDigestToken().subscribe(digest => {
+             let fileSub =  this.hotspotservice.getFileFromFolder(digest["d"].GetContextWebInformation.FormDigestValue, this.hotspotname, hotspot.targetFilename).subscribe(value => {
                 hotspot.markup.body = value.toString();
                 $(this.popoverToolbarEdit.nativeElement).find(".editLink").attr("href", `#edit/${this.hotspotname}/${hotspot.hotspotId}/${hotspot.targetFilename}`);
                 console.log(this.popoverToolbarEdit.nativeElement.innerHTML)
@@ -62,10 +64,12 @@ export class ImageMapComponent implements OnInit, AfterViewInit, AfterViewChecke
               },(error)=>{
                 this.router.navigate([`error/2/${hotspot.targetFilename}`]);
               })
+              this.sub.push(fileSub)
             },(error)=>{
               this.router.navigate([`error/1/data.jso`]);
             })
-
+            
+            this.sub.push(digestSub)
           }
           else {
 
@@ -80,7 +84,7 @@ export class ImageMapComponent implements OnInit, AfterViewInit, AfterViewChecke
           }
         }
       })).subscribe(res => console.log(res))
-
+      this.sub.push(dataSub)
     });
 
   }
@@ -108,6 +112,10 @@ export class ImageMapComponent implements OnInit, AfterViewInit, AfterViewChecke
     $('.popover').hide();
     $('[data-toggle="popover"]').popover('hide');
     $('[data-toggle="popover"]').popover('dispose');
+    for(var i=0;i<this.sub.length;i++)
+    {
+      this.sub[i].unsubscribe()
+    }
   }
 
 }

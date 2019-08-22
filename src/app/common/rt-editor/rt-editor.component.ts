@@ -131,7 +131,7 @@ export class RtEditorComponent implements OnInit {
 
   onChange($event) {
     debugger;
-    this.editorValue = CKEDITOR.currentInstance.getData(); //$event.editor.getData();
+    this.editorValue =$event.editor.getData();// CKEDITOR.currentInstance.getData(); 
   }
 }
 
